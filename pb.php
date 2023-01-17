@@ -10,12 +10,14 @@ class PB{
 
 	public static $_URL = API_SERVER ;
 	public static $headers = array() ;
+	public static $headerx = array() ;
 	public static $collection ;
 
   public static function _init($name = 'users') {
     self::$collection = $name ;
     $authorization = isset($_SESSION['authStore_token']) ? $_SESSION['authStore_token'] : '' ;
     self::$headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $authorization );
+		self::$headerx = array( 'Authorization: Bearer ' . $authorization );
   }
 
 	public static function GET( $id, $_collection = '' ){
@@ -55,7 +57,7 @@ class PB{
 		return $result ;
 
 	}
-	public static function CREATE( $data, $_collection = '' ){
+	public static function CREATE( $post, $_collection = '' ){
 
 		$_collection = $_collection == '' ? self::$collection : $_collection ;
 
@@ -65,8 +67,8 @@ class PB{
 		curl_setopt($ch, CURLOPT_URL, self::$_URL.$request );
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode( $post ) );
-		curl_setopt($ch, CURLOPT_HTTPHEADER, self::$headers );
+		curl_setopt($ch, CURLOPT_POSTFIELDS,  $post );
+		curl_setopt($ch, CURLOPT_HTTPHEADER, self::$headerx );
 		$response = curl_exec($ch);
 		$result = json_decode($response);
 
@@ -87,7 +89,7 @@ class PB{
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode( $post ) );
-		curl_setopt($ch, CURLOPT_HTTPHEADER, self::$headers );
+		curl_setopt($ch, CURLOPT_HTTPHEADER, self::$headerx );
 		$response = curl_exec($ch);
 		$result = json_decode($response);
 
