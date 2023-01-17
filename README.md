@@ -4,11 +4,25 @@ A very simple PocketBase PHP Connector
 This is a very simple attempt to create a connector for pocketbase when using PHP as the primary language.
 https://github.com/pocketbase/pocketbase
 
-Uploading documents to pocketbase
+## Authenticating session
+
+    session_start();
+    define( 'API_SERVER', 'http://127.0.0.1:8013' );
+    include_once( __DIR__ . '/pb.php' );
+    $result = PB::AUTHENTICATE( 'user@email.com', '123456' );
+
+## Closing session
+
+    session_start();
+    define( 'API_SERVER', 'http://127.0.0.1:8013' );
+    include_once( __DIR__ . '/pb.php' );
+    $result = PB::QUIT();    
+    
+## Uploading documents using PHP CURL to pocketbase server
 
     session_start();
 
-    define( 'API_SERVER', 'http://127.0.0.1:8013' );
+    define( 'API_SERVER', 'http://127.0.0.1:8090' );
     include_once( __DIR__ . '/pb.php' );
 
     PB::_init('documents');
